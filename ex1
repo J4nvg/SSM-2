@@ -79,10 +79,41 @@ n = 10
 def r(i):
     return 4**(-1) + (4*10)**(i/n)
 
-sim = np.zeros((n-3, nrRuns+1)) # tau's of r(i*)
+sim = np.zeros((n-3, nrRuns+1)) # tau's of i* = 2, 3, ... , n-2
 for i in range(2,n-1):
     for j in range(nrRuns):
-        sim[i-2, j] = i
+        sim[i-2, 0] = i
         tau = wienerProcessHit(T,M,r(i))
-        sim[i-2, j] = tau
+        sim[i-2, j+1] = tau
 # print(sim)
+
+expTable = np.zeros((n-3, 4))
+simExp1 = np.zeros(n-3) # value of the first expectation in each simulation
+simProb = np.zeros(n-3) # probability that the condition holds in each simualtion
+simExp2 = np.zeros(n-3) # value of the second expectation in each simulation
+for s in range(nrRuns): # simulation
+    exp1True = [] # where the condition is true for 1st expectation
+    exp2True = [] # where the condition is true for 2nd expectation
+    for i in range(1, n-4): # i*
+        if sim[i-1, s] < sim[i+1, s]:
+            exp1True.append(sim[i-1, s])
+        probCounter = 0 # when the condition hold for the probability
+        if sim[i+1, s] < sim[i-1, s]:
+            probCounter += 1
+        if sim[i-1, s] > sim[i+1, s]:
+            exp2True.append(sim[i+1, s])
+    # calculating all asked expectations/probability in given simulation
+    e1 = np.mean(exp1True)
+    p = probCounter/(n-3)
+    e2 = np.mean(exp2True)
+    # storing them
+    simExp1 = e1
+    simProb = p
+    simExp2 = e2
+    
+for i in range(n-3):
+    expTable[i, 0] = i+2
+    expTable[i, 1] = np.mean(simExp1)
+    expTable[i, 2] = np.mean(simProb)
+    expTable[i, 3] = np.mean(simExp2)
+print(expTable)
