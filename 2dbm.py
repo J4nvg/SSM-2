@@ -4,7 +4,6 @@ from scipy import stats
 from dist.Distribution import Distribution
 
 nrRuns = 100
-
 def twodimensionalBM(mu, sigma, T, M):
     # hitting_times = np.zeros(nrRuns)
     x, y = np.zeros(M), np.zeros(M)
