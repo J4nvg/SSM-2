@@ -72,9 +72,9 @@ def oneC(dt, mu, sigma,r_start,r_inner,r_outer):
             return time_elapsed,0
 
 
-# nrRuns = 1e5
-nrRuns = 10
-stepSize = 1e-4
+nrRuns = int(1e4)
+# nrRuns = 10
+stepSize = 1e-2
 #Predefined n
 n = 10
 # n = 5
@@ -108,6 +108,6 @@ for i_star in range(2, n-1):
     E_outer = np.mean(hitting_times[boundaries == 1])
     ci = DescrStatsW(hitting_times[boundaries == 1]).tconfint_mean(alpha=0.05)
     # print("95% CI for E[τ_outer | τ_inner > τ_outer]:", f"{ci[0]:.3f}", f"{ci[1]:.3f}")
-    print("E[τ_outer | τ_inner > τ_outer] =", f"{E_outer:.3f}", f"±{ci[1]-E_outer:.3f}","\n")
+    print("E[τ_outer | τ_inner >     τ_outer] =", f"{E_outer:.3f}", f"±{ci[1]-E_outer:.3f}","\n")
 
 
