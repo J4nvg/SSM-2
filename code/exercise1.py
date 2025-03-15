@@ -1,7 +1,7 @@
 from process import *
 
 # 1B
-N = 1000
+N = 10000
 T = np.zeros(N) # hitting times
 for i in range(T.size):
     T[i] = hitting_time(10000, (0,0), 1)
@@ -29,5 +29,5 @@ for i in range(2, n - 1):
     T = np.zeros(N) # hitting times
     I = np.zeros(N) # indicators that the smaller circle was hit
     for k in range(N):
-        T[k], I[k] = hitting_time2(1000, r(i-1), r(i+1), [r(i), 0])
+        T[k], I[k] = hitting_time2(100000, r(i-1), r(i+1), [r(i), 0])
     print(f"{i} & {conf(T[I == 0])} & {conf(I)} & {conf(T[I == 1])}\\\\")
