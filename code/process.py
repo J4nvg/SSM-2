@@ -55,17 +55,10 @@ def hitting_time(M, W0, r, B=[]):
     s = 1 if np.linalg.norm(W0) < r else -1 # get original orientation
     W = process(1, M, W0, B)
     i = np.nonzero(np.linalg.norm(W, axis=0) * s >= r * s)[0]
-    # plt.plot(W[0], W[1])
-    # ax = plt.gca()
-    # for b in B:
-    #     b.draw(ax)
-    # c = plt.Circle((0,0), r, color='b', fill=False)
-    # ax.add_patch(c)
-    # plt.show()
     if i.size > 0:
         return i[0] / M
     else:
         return 1 + hitting_time(M, W[:, -1], r, B)
     
 def conf(X):
-    return f"{np.mean(X):.2} \\pm {1.96 * np.std(X)/np.sqrt(X.size):.2}"
+    return f"{np.mean(X):.3} \\pm {1.96 * np.std(X)/np.sqrt(X.size):.3}"
