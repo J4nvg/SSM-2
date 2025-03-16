@@ -27,8 +27,9 @@ class CSB:
             self.local_time += dt / (2 * eps)
             # Update Markov-chain barrier state.
             while self.local_time > self.next_event:
-                self.next_event += stats.poisson.rvs(self.ln if self.s == 1 else self.lp)
                 self.s *= -1
+                self.next_event += stats.poisson.rvs(self.ln if self.s == 1 else self.lp)
+
         # Go back to original coordinates
         X += (self.x, self.y)
     
@@ -53,7 +54,7 @@ def process(T, M, W0, B):
 # Runs the process until it hits some radius r, return the elapsed time
 def hitting_time(M, W0, r, B=[]):
     s = 1 if np.linalg.norm(W0) < r else -1 # get original orientation
-    W = process(1, M, W0, B)
+    W = process(1, M, W0, B) # simulate the process for a duration of 1
     i = np.nonzero(np.linalg.norm(W, axis=0) * s >= r * s)[0]
     if i.size > 0:
         return i[0] / M
