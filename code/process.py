@@ -12,7 +12,7 @@ class CSB:
         self.ln = ln
         self.s = s
         l = self.ln if self.s == 1 else self.lp
-        self.next_event = stats.poisson.rvs(l) if l != np.inf else np.inf
+        self.next_event = stats.expon.rvs(scale=1/l) if l != 0 else np.inf
         self.local_time = 0
 
     # Reflect or tunnel the process through the barrier and update local time
@@ -28,7 +28,8 @@ class CSB:
             # Update Markov-chain barrier state.
             while self.local_time > self.next_event:
                 self.s *= -1
-                self.next_event += stats.poisson.rvs(self.ln if self.s == 1 else self.lp)
+                l = self.ln if self.s == 1 else self.lp
+                self.next_event += stats.expon.rvs(scale=1/l) if l != 0 else np.inf
 
         # Go back to original coordinates
         X += (self.x, self.y)

@@ -1,9 +1,9 @@
 from process import *
 
 # 3B
-N = 50
+N = 500
 XT = np.zeros(N)
-B = CSB(0, 0, 1, 0, np.inf), CSB(0, 0, 1/2, 4, 1)
+B = CSB(0, 0, 1, lp=np.inf, ln=0), CSB(0, 0, 1/2, 4, 1)
 
 
 for i in range(N):
@@ -31,7 +31,7 @@ T = 100
 M = 1000000
 s = T/M
 w = 0.005
-B = CSB(0,0,1,0,np.inf), CSB(1/4, 0, 1/2, 2, 1/2), CSB(-1/2, 1/2, 1/8, 3, 1/3, s=-1), CSB(1/2, 1/4, 1/16, 1/4, 4, s=-1)
+B = CSB(0,0,1,lp=np.inf, ln=0), CSB(1/4, 0, 1/2, lp=2, ln=1/2), CSB(-1/2, 1/2, 1/8, lp=3, ln=1/3, s=-1), CSB(1/2, 1/4, 1/16, lp=1/4, ln=4, s=-1)
 X = process(T, M, (0, 0), B)
 plt.figure(dpi=700)
 plt.hist2d(X[0], X[1], bins=(int(2/w), int(2/w)), range=[[-1,1], [-1,1]])
